@@ -1,37 +1,22 @@
-class LoginSystem:
-    user_names = []
-    passwords = []
+import mysql.connector
 
+class LoginSystem:
+    usernames = []
+    passwords = []
 
     def __init__(self):
         pass
-    
+
     def create_user(self, user_name, password):
-        self.user_names.append(user_name)
+        self.login_details = {'username':user_name,'password':password}
+        self.usernames.append(user_name)
         self.passwords.append(password)
-    
+        
     def username_is_unique(self, user_name): # Returns bool (True/False)
-        user_count = self.user_names.count(user_name)
+        user_count = self.usernames.count(user_name)
         
         return user_count == 0
-
         
-
-        
-
-    
-    
-    def some_print(self):
-        print("HIII")
-
-    # def user_name(self, user_names):
-    #     se
-
-# To test
-        
-system = LoginSystem()
-system.create_user("gabriel", "abc")
-print(f"{system.user_names}\n {system.passwords}")
-
-
-
+user1 = LoginSystem()
+user1.create_user("kenan", "abc")
+print(user1.login_details['username'], user1.login_details['password'])
