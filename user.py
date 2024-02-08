@@ -8,3 +8,6 @@ class User:
 
         login_system.create_user(user, password)
         
+# Composite Class of Users
+class Users:
+    self.login_details = {}
