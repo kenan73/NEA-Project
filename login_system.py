@@ -8,7 +8,7 @@ class LoginSystem:
     def hash_password(self, password: str) -> str: # Using hashlib for password hashing.
         return hashlib.sha256(password.encode()).hexdigest()
 
-    def validate_user_name(self, user_name: str) -> bool:
+    def validate_user_name(self, user_name: str) -> bool: # Checks if username meets requirements
         return all(c.islower() or c.isdigit() or c == '_' for c in user_name)
 
     def create_user(self, user_name: str, password: str) -> bool:
@@ -21,11 +21,12 @@ class LoginSystem:
         hashed_password = self.hash_password(password)
         self.login_details[user_name] = hashed_password
         return True
+    
 
     def log_in(self, user_name: str, password: str) -> bool:
         hashed_password = self.hash_password(password)
         return self.login_details.get(user_name) == hashed_password
-
+    
 # Example usage
 login_system = LoginSystem()
 if login_system.create_user("user1", "password123"):
