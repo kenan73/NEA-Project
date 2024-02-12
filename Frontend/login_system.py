@@ -1,5 +1,4 @@
 import hashlib
-import mysql.connector
 
 class LoginSystem:
     def __init__(self):

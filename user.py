@@ -2,7 +2,7 @@ from login_system import LoginSystem
 
 
 class User():
-    ''' User Class to create,store and retive User information'''
+    ''' User Class to create,store and retrieve User information'''
     def __init__(self):
         self.user = ""
         self.password = ""
@@ -18,9 +18,9 @@ class User():
         return f"username ={self.user} password={self.password}"
         
 # Composite Class of Users
-class Users(LoginSystem):
-    def __init__(self):
-        super().__init__(self)
+# class Users(LoginSystem):
+#     def __init__(self):
+#         super().__init__(self)
     
 if __name__ == "__main__":
     kenan = User()
