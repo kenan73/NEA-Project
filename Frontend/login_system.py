@@ -28,15 +28,7 @@ class LoginSystem:
     
 # Example usage
 login_system = LoginSystem()
-if login_system.create_user("user1", "password123"):
-    print("User created successfully!")
-else:
-    print("Failed to create user.")
 
-if login_system.log_in("user1", "password123"):
-    print("Logged in successfully!")
-else:
-    print("Login failed.")
 
 
 '''user1 = LoginSystem()
