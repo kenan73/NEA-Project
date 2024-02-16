@@ -19,7 +19,7 @@ class LoginSystem:
             return False
         hashed_password = self.hash_password(password)
         self.login_details[user_name] = hashed_password
-        return True
+        return True 
     
 
     def log_in(self, user_name: str, password: str) -> bool:
@@ -30,8 +30,7 @@ class LoginSystem:
 login_system = LoginSystem()
 
 
-
-'''user1 = LoginSystem()
+user1 = LoginSystem()
 user1.create_user("kenan", "123")
-print(user1.log_in("kenan", "1234"))'''
+print(user1.log_in("kenan", "123"))
 
