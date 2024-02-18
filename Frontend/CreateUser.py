@@ -1,5 +1,5 @@
-from login_system import LoginSystem
-def main():
+'''from login_system import LoginSystem
+def CreateUser():
     login_system = LoginSystem()
     while True:
         action = input("Do you want to (1) create an account or (2) log in? (Enter 1 or 2): ")
@@ -21,4 +21,4 @@ def main():
                 print("Please try again.")
 
 if __name__ == "__main__":
-    main()
+    CreateUser()'''
