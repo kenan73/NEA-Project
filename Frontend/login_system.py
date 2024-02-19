@@ -13,26 +13,26 @@ class LoginSystem:
     
     def create_user(self, user_name: str, password: str) -> bool:
         if not self.validate_user_name(user_name):
-            print("Invalid username.")
+            print('Invalid username.')
             return False
         
         if not database.username_is_unique(user_name):
             print('Username already exists.')
             return False
           
-        hashed_password = self.hash_password(password)
+        hashed_password = self.hash_password(password)  
         
-        if database.insert_user_details(user_name, hashed_password):
-            print("Data inserted successfully.")
+        if not database.insert_user_details(user_name, hashed_password):
+            print('Failed to insert data')
         
         else:
-            print('Failed to insert data.')
+            print('Data inserted successfully.')
         #Revise logic (else statement)
         
         return True
         
         
-    def log_in(self, user_name: str, password: str) -> bool: #Logs in user if details are verified
+    def log_in(self, user_name: str, password: str) -> None: #Logs in user if details are verified
         if database.verify_user_login(user_name, password):
             print('Successfully logged in.')
         else:
