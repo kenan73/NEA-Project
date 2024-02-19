@@ -1,9 +1,9 @@
 import mariadb
 import sys
 
-def username_is_unique(user_name):
+def connect():
+    """Establishes a connection to the MariaDB database and returns the connection object."""
     try:
-        # Connect to MariaDB
         conn = mariadb.connect(
             host="127.0.0.1",
             user="root",
@@ -11,23 +11,79 @@ def username_is_unique(user_name):
             port=3306,
             database="nea_db"
         )
+        return conn
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB: {e}")
+        sys.exit(1)
+
+
+
+def username_is_unique(user_name):
+    try:
+        conn = connect()
         cursor = conn.cursor()
         query = "SELECT username FROM login_details WHERE username = %s"
         
-        cursor.execute(query, (user_name,))
+        cursor.execute(query, [user_name])
         result = cursor.fetchone()
-        
-        cursor.close()
-        conn.close()
         
         if result:
             return False
         else:
             return True
+    
+    except mariadb.Error as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+    
+    finally:
+        cursor.close()
+        conn.close()
+        
+
+def insert_user_details(user_name, hashed_password):
+    """Inserts username and password into the login details database"""   
+    try:
+        conn = connect()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO login_details (username, pssword) VALUES (?, ?)", (user_name, hashed_password))
+        conn.commit()
+ 
+        
+    except mariadb.Error as e:
+        print(f"Error inserting data into MariaDB: {e}")
+        
+    finally:
+        cursor.close()
+        conn.close()
+        
+        
+def verify_user_login(user_name, password):
+    """Verifies if the provided username and password match the stored credentials in the database."""
+    try:
+        conn = connect()
+        cursor = conn.cursor()
+        
+        
+        query = "SELECT pssword FROM login_details WHERE username = %s"
+        cursor.execute(query, [user_name])
+        result = cursor.fetchone()
+         
+        if result:
+            stored_hashed_password = result[0]
+            return stored_hashed_password == password
+            #provided_hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        
+        else:
+            return False
             
     except mariadb.Error as e:
         print(f"Error: {e}")
         sys.exit(1)
+    
+    finally:
+        cursor.close()
+        conn.close()
     
 
 

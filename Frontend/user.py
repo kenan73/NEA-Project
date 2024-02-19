@@ -1,4 +1,4 @@
-import hashlib
+'''import hashlib
 from login_system import LoginSystem
 
 class User:
@@ -36,6 +36,6 @@ class Users:
 if __name__ == "__main__":
     users = Users()
     users.add_user("user1", "password123")
-    users.log_in_user("user1", "password123")
+    users.log_in_user("user1", "password123")'''
 
 
