@@ -6,7 +6,9 @@ class LoginSystem:
         pass
     
     def hash_password(self, password: str) -> str: # Using hashlib for password hashing
-        return hashlib.sha256(password.encode()).hexdigest()
+        global hashed_password
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        return hashed_password
     
     def validate_user_name(self, user_name: str) -> bool: # Checks if username meets requirements
         return all(c.islower() or c.isdigit() or c == '_' for c in user_name)
@@ -33,7 +35,8 @@ class LoginSystem:
         
         
     def log_in(self, user_name: str, password: str) -> None: #Logs in user if details are verified
-        if database.verify_user_login(user_name, password):
+        self.hash_password(password)
+        if database.verify_user_login(user_name, hashed_password):
             print('Successfully logged in.')
         else:
             print('User not found.')
@@ -46,4 +49,4 @@ run = True
 while run == True:
     user_name = str(input('Enter username: '))
     password = str(input('Enter password '))
-    login_system.create_user(user_name, password)
+    login_system.log_in(user_name, password)

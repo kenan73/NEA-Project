@@ -19,6 +19,7 @@ def connect():
 
 
 def username_is_unique(user_name: str):
+    """Checks if there is a duplicate value stored in the database"""
     try:
         conn = connect()
         cursor = conn.cursor()
@@ -60,7 +61,7 @@ def insert_user_details(user_name: str, hashed_password: str) -> bool:
         conn.close()
         
         
-def verify_user_login(user_name: str, password: str) -> bool:
+def verify_user_login(user_name: str, hashed_password: str) -> bool:
     """Verifies if the provided username and password match the stored credentials in the database."""
     try:
         conn = connect()
@@ -73,8 +74,7 @@ def verify_user_login(user_name: str, password: str) -> bool:
          
         if result:
             stored_hashed_password = result[0]
-            return stored_hashed_password == password
-            #provided_hashed_password = hashlib.sha256(password.encode()).hexdigest()
+            return stored_hashed_password == hashed_password
         
         else:
             return False
