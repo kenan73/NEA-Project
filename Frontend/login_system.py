@@ -49,4 +49,4 @@ run = True
 while run == True:
     user_name = str(input('Enter username: '))
     password = str(input('Enter password '))
-    login_system.log_in(user_name, password)
+    login_system.create_user(user_name, password)

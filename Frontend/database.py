@@ -15,9 +15,8 @@ def connect():
     except mariadb.Error as e:
         print(f"Error connecting to MariaDB: {e}")
         sys.exit(1)
-
-
-
+    
+    
 def username_is_unique(user_name: str):
     """Checks if there is a duplicate value stored in the database"""
     try:
@@ -86,6 +85,8 @@ def verify_user_login(user_name: str, hashed_password: str) -> bool:
     finally:
         cursor.close()
         conn.close()
+        
+    dat
     
 
 
