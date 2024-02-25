@@ -29,7 +29,6 @@ class LoginSystem:
         
         else:
             print('Data inserted successfully.')
-        #Revise logic (else statement)
         
         return True
         
@@ -39,14 +38,10 @@ class LoginSystem:
         if database.verify_user_login(user_name, hashed_password):
             print('Successfully logged in.')
         else:
-            print('User not found.')
-        
+            print('Username/password incorrect.')
 
-login_system = LoginSystem()
-
-# Example usage
-run = True
-while run == True:
+if __name__ == '__main__':
+    login_system = LoginSystem()
     user_name = str(input('Enter username: '))
-    password = str(input('Enter password '))
+    password = str(input('Enter password: '))
     login_system.create_user(user_name, password)
