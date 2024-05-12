@@ -22,19 +22,16 @@ def username_is_unique(user_name: str):
     try:
         conn = connect()
         cursor = conn.cursor()
-        query = "SELECT username FROM login_details WHERE username = %s"
+        query = "SELECT username FROM login_details WHERE username = ?"
         
-        cursor.execute(query, [user_name])
+        cursor.execute(query, (user_name,))
         result = cursor.fetchone()
         
-        if result:
-            return False
-        else:
-            return True
+        return result is None
     
     except mariadb.Error as e:
-        print(f"Error: {e}")
-        sys.exit(1)
+        print(f"Error checking username uniqueness: {e}")
+        return False
     
     finally:
         cursor.close()
@@ -65,28 +62,23 @@ def verify_user_login(user_name: str, hashed_password: str) -> bool:
     try:
         conn = connect()
         cursor = conn.cursor()
-        
-        
-        query = 'SELECT pssword FROM login_details WHERE username = %s'
-        cursor.execute(query, [user_name])
+        query = 'SELECT pssword FROM login_details WHERE username = ?'
+        cursor.execute(query, (user_name))
         result = cursor.fetchone()
          
         if result:
             stored_hashed_password = result[0]
             return stored_hashed_password == hashed_password
         
-        else:
-            return False
+        return False
             
     except mariadb.Error as e:
-        print(f'Error: {e}')
-        sys.exit(1)
+        print(f'Error verifying user login {e}')
+        return False
     
     finally:
         cursor.close()
         conn.close()
-        
-    dat
     
 
 
