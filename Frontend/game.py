@@ -1,11 +1,23 @@
 import pygame
 import sys  # Import sys for handling exit
 
+from models import GameSprite
+from game_utils import load_sprite
+
 class Asteroids:
     def __init__(self):
         '''Initializes pygame and sets up the game window.'''
         self._init_pygame()
         self.screen = pygame.display.set_mode((800, 600))
+        self.background = load_sprite('space', False)
+        self.clock = pygame.time.Clock()
+        self.spaceship = GameSprite(
+            (400, 300), load_sprite('spaceship'), (0, 0)
+        )
+        self.asteroid = GameSprite(
+            (400, 300), load_sprite('Asteroid Huge'), (1,0)
+            
+        )
 
     def main_loop(self):
         '''Runs the main game loop.'''
@@ -13,7 +25,7 @@ class Asteroids:
         while running:
             for event in pygame.event.get():
                 self._handle_input(event)
-            self._process_game_logic()
+            self._process_logic()
             self._draw()
 
     def _init_pygame(self):
@@ -31,14 +43,18 @@ class Asteroids:
                 pygame.quit()
                 sys.exit()
 
-    def _process_game_logic(self):
+    def _process_logic(self):
         '''Processes the game logic.'''
-        pass
+        self.spaceship.move()
+        self.asteroid.move()
 
     def _draw(self):
         '''Draws all game elements on the screen and updates the display.'''
-        self.screen.fill((0, 0, 255))
+        self.screen.blit(self.background, (0, 0))
+        self.spaceship.draw(self.screen)
+        self.asteroid.draw(self.screen)
         pygame.display.flip()
+        self.clock.tick(60)
 
     def quit_game(self):
         '''Handles tasks to quit the game properly.'''
