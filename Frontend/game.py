@@ -1,7 +1,7 @@
 import pygame
 import sys  # Import sys for handling exit
 
-from models import GameSprite
+from models import Spaceship
 from game_utils import load_sprite
 
 class Asteroids:
@@ -11,48 +11,48 @@ class Asteroids:
         self.screen = pygame.display.set_mode((800, 600))
         self.background = load_sprite('space', False)
         self.clock = pygame.time.Clock()
-        self.spaceship = GameSprite(
-            (400, 300), load_sprite('spaceship'), (0, 0)
-        )
-        self.asteroid = GameSprite(
-            (400, 300), load_sprite('Asteroid Huge'), (1,0)
-            
-        )
+        self.spaceship = Spaceship((400, 300,), (self.screen.get_width(), self.screen.get_height()))
 
     def main_loop(self):
         '''Runs the main game loop.'''
         running = True
         while running:
             for event in pygame.event.get():
-                self._handle_input(event)
-            self._process_logic()
-            self._draw()
+                if event.type ==pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        running = False
+            self.handle_input(event)
+            self.process_logic()
+            self.draw()
 
     def _init_pygame(self):
         '''Initializes the pygame modules and sets the caption of the window.'''
         pygame.init()
         pygame.display.set_caption('Asteroids: Remastered')
 
-    def _handle_input(self, event):
-        '''Handles user input.'''
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                pygame.quit()
-                sys.exit()
+    def handle_input(self, event):
+        '''Handles user inputs.'''
+        is_key_pressed = pygame.key.get_pressed()
+        
+        self.spaceship.is_thrusting = False
+        if is_key_pressed[pygame.K_d]:
+            self.spaceship.rotate(clockwise=True)
+        if is_key_pressed[pygame.K_a]:
+                self.spaceship.rotate(clockwise=False)
+        if is_key_pressed[pygame.K_w]:
+            self.spaceship.is_thrusting = True
 
-    def _process_logic(self):
+    def process_logic(self):
         '''Processes the game logic.'''
-        self.spaceship.move()
-        self.asteroid.move()
+        self.spaceship.update(self.screen)
 
-    def _draw(self):
+    def draw(self):
         '''Draws all game elements on the screen and updates the display.'''
         self.screen.blit(self.background, (0, 0))
         self.spaceship.draw(self.screen)
-        self.asteroid.draw(self.screen)
+        '''self.asteroid.draw(self.screen)'''
         pygame.display.flip()
         self.clock.tick(60)
 
