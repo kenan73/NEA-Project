@@ -20,9 +20,9 @@ class LoginSystem:
             print('Invalid username.')
             return False
         
-        if len(password > 20):
+        if len(password) > 20:
             print('Password must be 20 characters or less.')
-            return False 
+            return False
         
         if not database.username_is_unique(user_name):
             print('Username already exists.')

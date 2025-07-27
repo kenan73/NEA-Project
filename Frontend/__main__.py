@@ -1,4 +1,13 @@
-from game import Asteroids
+from .game import AsteroidsGame
+
+
+def main() -> None:
+    game = AsteroidsGame()
+    try:
+        game.main_loop()
+    finally:
+        game.quit_game()
+
+
 if __name__ == "__main__":
-    Asteroids = Asteroids()
-    Asteroids.main_loop()
+    main()
